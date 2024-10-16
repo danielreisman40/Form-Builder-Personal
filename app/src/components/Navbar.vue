@@ -11,7 +11,7 @@
             <div class="flex w-4/12 py-3">
                 <ul class="flex w-full justify-evenly text-xl font-bold items-center">
                     <li> 
-                        <RouterLink to="/"> Home </RouterLink>
+                        <RouterLink to="/home"> Home </RouterLink>
                     </li>
                     <li> 
                         <RouterLink to="/about"> About </RouterLink>
@@ -53,8 +53,8 @@ import {useAuthStore} from '@/stores/authStore'
 const currentUserStore = useCurrentUserStore();
 
 const logout = () => {
-    useAuthStore().logoutUser();
-    router.push({path: "/"})
+    useAuthStore().logout_user();
+    router.push({path: "/home"})
 }
 
 </script>

@@ -4,7 +4,7 @@ import { pbServer } from "./pocketbase/pocketbase";
 
 export const useAuthStore = defineStore('authStore', () => {
 
-    const loginUser = async (username:string, password:string) => {
+    const login_user = async (username:string, password:string) => {
 
         try {
             await pbServer.collection('users').authWithPassword(username, password);
@@ -14,24 +14,22 @@ export const useAuthStore = defineStore('authStore', () => {
 
     };
 
-    const logoutUser = () => {
+    const logout_user = () => {
         pbServer.authStore.clear();
     };
 
-    const signUpUser = async (data:object) => {
+    const sign_up_user = async (sign_up_data) => {
         try {
-            await pbServer.collection('users').create(data)
-
-            await loginUser;
+            await pbServer.collection('users').create(sign_up_data)
         } catch (error) {
             console.log(error)
         }
     };
 
     return {
-        loginUser,
-        logoutUser,
-        signUpUser,
+        login_user,
+        logout_user,
+        sign_up_user,
     }
 
 });

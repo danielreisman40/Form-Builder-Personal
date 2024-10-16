@@ -1,13 +1,6 @@
 <template>
 
-    <div v-if="currentUserStore.user">
-
-        <h1> Welcome {{ currentUserStore.user.name }}</h1>
-
-    </div>
-
-    <div v-else>
-
+    <div>
         <div class="flex justify-center pt-36 w-screen items-center">
             <div class="w-full md:w-1/2 flex flex-col items-center ">
                 <!-- text login -->
@@ -54,13 +47,8 @@
 
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
-    import {pbServer, useCurrentUserStore} from '../../stores/pocketbase/pocketbase';
     import {useAuthStore} from '../../stores/authStore'
     import router from '@/router';
-
-
-    //If we want to access the current user easily
-    const currentUserStore = useCurrentUserStore();
 
     const authStore = useAuthStore();
 
@@ -75,10 +63,12 @@
 
         else {
 
-            authStore.loginUser(username.value, password.value);
+            authStore.login_user(username.value, password.value);
                 
             username.value = "";
             password.value=""
+
+            router.push({path: '/home'})
 
         }
     }

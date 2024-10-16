@@ -24,9 +24,9 @@
 
                     <!-- Confirm Password Input -->
                     <div class="w-3/4 mb-6">
-                        <input type="password" name="confirm_password" id="confirm_password" v-model="confrimPassword" class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold text-black rounded hover:ring-1 outline-blue-500 " placeholder="Confirm Password">
+                        <input type="password" name="confirm_password" id="confirm_password" v-model="user_data.passwordConfirm" class="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold text-black rounded hover:ring-1 outline-blue-500 " placeholder="Confirm Password">
                     </div>
-                    
+
                     <!-- button -->
                     <div class="w-3/4 mt-2">
                         <button type="submit" @click="doSignUp(user_data)" class="py-4 bg-blue-400 w-full rounded text-blue-50 font-bold hover:bg-blue-700"> CREATE ACCOUNT </button>
@@ -44,22 +44,34 @@
     import router from '@/router';
     import { reactive } from 'vue';
 
-    const authStore = useAuthStore(); 
+    const auth_store = useAuthStore(); 
 
     const user_data = reactive({
         email: ref(""),
         username: ref(""),
         password: ref(""),
+        passwordConfirm: ref("")
     });
 
-    const confrimPassword = ref("");
+    //const confirm_password = ref("");
 
-    function doSignUp(data):void {
+    function doSignUp(sign_up_data):void {
         //authStore.signUpUser(data)
 
-        data = user_data
+        sign_up_data = user_data;
 
-        console.log(data.email);
+        if(sign_up_data.password !== sign_up_data.passwordConfirm) {
+            alert("Passwords do not match! Please ensure password match. ");
+            return;
+        }
+
+        else {
+            console.log(sign_up_data);
+            auth_store.sign_up_user(sign_up_data)
+            auth_store.login_user(sign_up_data.username, sign_up_data.password);
+            router.push({path: '/home'})
+            return;
+        }
         
     }
 
